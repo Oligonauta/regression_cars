@@ -1,0 +1,5 @@
+Conjunto de dados de referência = https://www.kaggle.com/datasets/CooperUnion/cardataset/suggestions?status=pending&yourSuggestions=true
+1. Realizar a análise exploratória
+2. Tratar os dados
+3. Usar um modelo de regressão linear para tentar prever o preço do veículo
+4. Avaliar o desempenho do modelo com RMSE e MAE
