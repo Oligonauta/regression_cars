@@ -80,6 +80,45 @@ sns.histplot(dados.msrp[dados.msrp < 100000], bins = 50)
 dados["msrp"] = np.log1p(dados["msrp"])
 sns.histplot(dados.msrp[dados.msrp < 100000], bins = 50)
 
+# %%
+# Definindo a estratégia de validação e de treino
+# vamos utilizar 60% dos dados para treino, 20% para validação e 20% para teste
+n_dados = len(dados)
 
+n_validacao = int(n_dados * 0.2)
+n_teste = int(n_dados * 0.2)
+n_treino = n_dados - n_validacao - n_teste
 
+print(n_dados, n_treino, n_validacao, n_teste)
+print(n_dados, n_treino + n_validacao + n_teste)
+# %%
+dados_treino = dados.iloc[n_treino:]
+dados_validacao = dados.iloc[n_treino:n_treino + n_validacao]
+dados_teste = dados.iloc[n_treino + n_validacao :]
+
+SEED = 123
+np.random.seed(SEED)
+
+indice_aleatorio = np.arange(n_dados)
+
+np.random.shuffle(indice_aleatorio)
+
+dados_treino = dados.iloc[indice_aleatorio[n_treino:]].reset_index(drop=True)
+dados_validacao = dados.iloc[indice_aleatorio[n_treino:n_treino + n_validacao]].reset_index(drop=True)
+dados_teste = dados.iloc[indice_aleatorio[n_treino + n_validacao :]].reset_index(drop=True)
+
+# %%
+dados_treino.head()
+# %%
+y_treino = np.log1p(dados_treino["msrp"].values)
+y_validacao = np.log1p(dados_validacao["msrp"].values)
+y_teste = np.log1p(dados_teste["msrp"].values)
+# %%
+dados_treino = dados_treino.drop("msrp",axis=1)
+dados_validacao = dados_validacao.drop("msrp",axis=1)
+dados_teste = dados_teste.drop("msrp",axis=1)
+# %%
+dados_treino.columns
+dados_validacao.columns
+dados_teste.columns
 # %%
